@@ -15,7 +15,10 @@ export const Card = ({ id, image, title, summary }: CardProps) => {
       </div>
       <div className="p-4 flex flex-col">
         <h1 className="text-2xl font-bold text-gray-900 min-h-24">{title}</h1>
-        <p className="text-gray-500 line-clamp-3 ">{summary}</p>
+        <p
+          className="text-gray-500 line-clamp-3 "
+          dangerouslySetInnerHTML={{ __html: summary }}
+        />
       </div>
       <div className="p-4">
         <Link to={`/recipe/${id}`} className="cursor-pointer">

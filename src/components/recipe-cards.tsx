@@ -16,7 +16,7 @@ export const RecipeCards = () => {
     const getData = async () => {
       try {
         const res = await axios.get(
-          `https://api.spoonacular.com/recipes/random?number=12&apiKey=024fabe782cd49cca228066b00d6f529`
+          `https://api.spoonacular.com/recipes/random?number=12&apiKey=62fe675592e44bdab1980848ce82a590`
         );
         const data = await res.data;
         setRandomRecipes(data.recipes);

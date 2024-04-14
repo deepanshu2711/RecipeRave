@@ -9,6 +9,7 @@ export const RecipeDetails = () => {
   const { id } = useParams();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [recipeDetail, setRecipeDetail] = useState<any>();
+  const [error, seterror] = useState(false);
 
   useEffect(() => {
     const getRecipeData = async () => {
@@ -20,12 +21,21 @@ export const RecipeDetails = () => {
         setRecipeDetail(data[0]);
       } catch (error) {
         console.log(error);
+        seterror(true);
       }
     };
     getRecipeData();
   }, [id]);
 
   console.log(recipeDetail);
+
+  if (error) {
+    return (
+      <p className="text-lg text-red-500 font-bold">
+        Some internal error occured please try again later
+      </p>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-16 mb-10 bg-gray-100 p-4 rounded-lg pb-10">

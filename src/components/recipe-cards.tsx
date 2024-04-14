@@ -11,6 +11,7 @@ interface Recipe {
 
 export const RecipeCards = () => {
   const [randomRecipes, setRandomRecipes] = useState<Recipe[]>([]);
+  const [error, seterror] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +30,7 @@ export const RecipeCards = () => {
         }
       } catch (error) {
         console.log(error);
+        seterror(true);
       }
     };
 
@@ -46,10 +48,19 @@ export const RecipeCards = () => {
       localStorage.setItem("randomRecipes", JSON.stringify(data));
     } catch (error) {
       console.log(error);
+      seterror(true);
     }
   };
 
   console.log(randomRecipes);
+
+  if (error) {
+    return (
+      <p className="text-lg text-red-500 font-bold">
+        Some internal error occured please try again later
+      </p>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 max-w-7xl mx-auto mt-10 gap-y-5 mb-10">

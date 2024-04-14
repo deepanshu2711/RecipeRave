@@ -29,7 +29,7 @@ export const RecipeDetails = () => {
 
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-16 mb-10 bg-gray-100 p-4 rounded-lg pb-10">
-      <div className="flex justify-between gap-x-40  mt-10">
+      <div className=" flex flex-col lg:flex-row justify-between gap-x-40  mt-10">
         <div className="min-w-96 h-96">
           <img src={recipeDetail?.image} className="rounded-xl w-96 h-96" />
         </div>
@@ -39,7 +39,7 @@ export const RecipeDetails = () => {
             className="text-lg text-gray-700"
             dangerouslySetInnerHTML={{ __html: recipeDetail?.summary }}
           />
-          <div className="flex items-center gap-x-10">
+          <div className="flex flex-col lg:flex-row items-center gap-x-10">
             <p className="flex items-center gap-x-3 text-gray-700 font-bold text-lg">
               Vegetarian:{" "}
               <span>

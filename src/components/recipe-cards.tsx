@@ -13,25 +13,46 @@ export const RecipeCards = () => {
   const [randomRecipes, setRandomRecipes] = useState<Recipe[]>([]);
 
   useEffect(() => {
-    const getData = async () => {
+    const fetchData = async () => {
       try {
-        const res = await axios.get(
-          `https://api.spoonacular.com/recipes/random?number=12&apiKey=62fe675592e44bdab1980848ce82a590`
-        );
-        const data = await res.data;
-        setRandomRecipes(data.recipes);
+        const cachedData = localStorage.getItem("randomRecipes");
+        if (cachedData) {
+          setRandomRecipes(JSON.parse(cachedData));
+        } else {
+          const res = await axios.get(
+            `https://api.spoonacular.com/recipes/random?number=12&apiKey=62fe675592e44bdab1980848ce82a590`
+          );
+          const data = res.data.recipes;
+          setRandomRecipes(data);
+
+          localStorage.setItem("randomRecipes", JSON.stringify(data));
+        }
       } catch (error) {
         console.log(error);
       }
     };
 
-    getData();
+    fetchData();
   }, []);
+
+  const LoadNewRecipes = async () => {
+    try {
+      localStorage.removeItem("randomRecipes");
+      const res = await axios.get(
+        `https://api.spoonacular.com/recipes/random?number=12&apiKey=62fe675592e44bdab1980848ce82a590`
+      );
+      const data = res.data.recipes;
+      setRandomRecipes(data);
+      localStorage.setItem("randomRecipes", JSON.stringify(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   console.log(randomRecipes);
 
   return (
-    <div className="grid grid-cols-3 gap-x-10 max-w-7xl mx-auto mt-10 gap-y-5 mb-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 max-w-7xl mx-auto mt-10 gap-y-5 mb-10">
       {randomRecipes &&
         randomRecipes.map((recipe) => (
           <Card
@@ -42,6 +63,12 @@ export const RecipeCards = () => {
             summary={recipe.summary}
           />
         ))}
+      <p
+        className="underline cursor-pointer hover:text-blue-500"
+        onClick={LoadNewRecipes}
+      >
+        Load new
+      </p>
     </div>
   );
 };
